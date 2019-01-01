@@ -32,6 +32,9 @@ self: super:
   zlib = addBuildTools super.zlib (pkgs.lib.optional pkgs.buildPlatform.isDarwin pkgs.buildPackages.darwin.libiconv);
   unix-compat = addBuildTools super.unix-compat (pkgs.lib.optional pkgs.buildPlatform.isDarwin pkgs.buildPackages.darwin.libiconv);
 
+  aeson = addBuildDepend super.aeson self.contravariant;
+  psqueues = dontCheck super.psqueues;    # won't cope with QuickCheck 2.12.x
+
   # LLVM is not supported on this GHC; use the latest one.
   inherit (pkgs) llvmPackages;
 
@@ -56,7 +59,7 @@ self: super:
   # haddock throws the error: No input file(s).
   fail = dontHaddock super.fail;
 
-  cereal = addBuildDepend super.cereal [ self.fail ];
+  cereal = addBuildDepend (dontCheck super.cereal) [ self.fail ];
 
   entropy = overrideCabal super.entropy (old: {
     postPatch = old.postPatch or "" + ''
