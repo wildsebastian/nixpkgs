@@ -40,6 +40,7 @@ self: super: {
   xhtml = null;
 
   aeson = addBuildDepend super.aeson self.contravariant;
+  base-compat-batteries = addBuildDepend super.base-compat-batteries self.contravariant;
   psqueues = dontCheck super.psqueues;    # won't cope with QuickCheck 2.12.x
   cereal = dontCheck super.cereal;
 
@@ -67,12 +68,12 @@ self: super: {
   # more verbose but friendlier for Hydra.
   stack = (doJailbreak super.stack).override {
     Cabal = self.Cabal_2_4_1_0;
-    hpack = self.hpack_0_31_1.override { Cabal = self.Cabal_2_4_1_0; };
-    yaml = self.yaml_0_11_0_0;
+    hpack = self.hpack.override { Cabal = self.Cabal_2_4_1_0; };
+    yaml = self.yaml;
     hackage-security = self.hackage-security.override { Cabal = self.Cabal_2_4_1_0; };
   };
-  hpack_0_31_1 = super.hpack_0_31_1.override {
-    yaml = self.yaml_0_11_0_0;
+  hpack = super.hpack.override {
+    yaml = self.yaml;
   };
 
 }
