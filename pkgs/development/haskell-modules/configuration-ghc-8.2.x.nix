@@ -42,6 +42,8 @@ self: super: {
   stm = self.stm_2_5_0_0;
   text = self.text_1_2_3_1;
 
+  aeson = addBuildDepend super.aeson self.contravariant;
+
   # Make sure we can still build Cabal 1.x.
   Cabal_1_24_2_0 = overrideCabal super.Cabal_1_24_2_0 (drv: {
     prePatch = "sed -i -e 's/process.*< 1.5,/process,/g' Cabal.cabal";
