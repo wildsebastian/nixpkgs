@@ -43,6 +43,7 @@ self: super: {
   text = self.text_1_2_3_1;
 
   aeson = addBuildDepend super.aeson self.contravariant;
+  base-compat-batteries = addBuildDepend super.base-compat-batteries self.contravariant;
   psqueues = dontCheck super.psqueues;    # won't cope with QuickCheck 2.12.x
   cereal = dontCheck super.cereal;
 
