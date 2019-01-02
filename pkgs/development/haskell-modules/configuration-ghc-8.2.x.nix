@@ -43,6 +43,8 @@ self: super: {
   text = self.text_1_2_3_1;
 
   aeson = addBuildDepend super.aeson self.contravariant;
+  psqueues = dontCheck super.psqueues;    # won't cope with QuickCheck 2.12.x
+  cereal = dontCheck super.cereal;
 
   # Make sure we can still build Cabal 1.x.
   Cabal_1_24_2_0 = overrideCabal super.Cabal_1_24_2_0 (drv: {
