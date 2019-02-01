@@ -39,6 +39,10 @@ self: super: {
   unix = null;
   xhtml = null;
 
+  aeson = addBuildDepend super.aeson self.contravariant;
+  psqueues = dontCheck super.psqueues;    # won't cope with QuickCheck 2.12.x
+  cereal = dontCheck super.cereal;
+
   # https://github.com/jcristovao/enclosed-exceptions/issues/12
   enclosed-exceptions = dontCheck super.enclosed-exceptions;
 

@@ -28,6 +28,9 @@ self: super:
   stm = self.stm_2_5_0_0;
   ghc-compact = self.ghc-compact_0_1_0_0;
 
+  aeson = addBuildDepend super.aeson self.contravariant;
+  psqueues = dontCheck super.psqueues;    # won't cope with QuickCheck 2.12.x
+
   network = addBuildTools super.network (pkgs.lib.optional pkgs.buildPlatform.isDarwin pkgs.buildPackages.darwin.libiconv);
   zlib = addBuildTools super.zlib (pkgs.lib.optional pkgs.buildPlatform.isDarwin pkgs.buildPackages.darwin.libiconv);
   unix-compat = addBuildTools super.unix-compat (pkgs.lib.optional pkgs.buildPlatform.isDarwin pkgs.buildPackages.darwin.libiconv);
@@ -56,7 +59,7 @@ self: super:
   # haddock throws the error: No input file(s).
   fail = dontHaddock super.fail;
 
-  cereal = addBuildDepend super.cereal [ self.fail ];
+  cereal = addBuildDepend (dontCheck super.cereal) [ self.fail ];
 
   entropy = overrideCabal super.entropy (old: {
     postPatch = old.postPatch or "" + ''
